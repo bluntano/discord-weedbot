@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "weed-bot",
+  "version": "0.0.69",
+  "dependencies": {
+    "exec-sh": "^0.3.2",
+    "express": "^4.16.4"
+  }
+}
