@@ -37,11 +37,13 @@ async def on_ready():
 @client.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.CommandOnCooldown):
-        await client.send_message(ctx.message.channel, content='Fuck off cunt!!! This command is on a **%.2f**s cooldown' % error.retry_after)
+        return
+    elif isinstance(error, commands.CommandNotFound):
+        return
     raise error  # re-raise the error so all the errors will still show up in console
 
 @client.command(pass_context=True)
-@commands.cooldown(1, 20, commands.BucketType.server) # on this, weed command cooldown has set to 20 seconds
+@commands.cooldown(1, 15, commands.BucketType.server) # on this, weed command cooldown has set to 15 seconds
 async def eed(ctx): # lol eed
     msg=await client.send_message(ctx.message.channel, "Starting to smoke")
     msgWait=time.sleep(3)
@@ -60,17 +62,19 @@ async def eed(ctx): # lol eed
     msg7=await client.edit_message(msg6, "🚬☁")
     msgWait8=time.sleep(speed)
     msg8=await client.edit_message(msg7, "🚬")
-    x = randint(1, 100)    # Pick a random number between 1 and 100.
-    #print (x)
+
+    x = randint(0, 101)    # Pick a random number between 0 and 101.
+
     msgWait9=time.sleep(speed)
     msg9=await client.edit_message(msg8, "You are {}% high, my dude!".format(x))
+
+    from randpic import randomPic
+    #test = print(randomPic())
+
+    picture = randomPic()
+
+    msgPicture=await client.send_file(ctx.message.channel, picture)
     
     # ".format(x)" is what variable will it use inside the curly brackets.
-
-    # also thank you, CroeyStoey, for suggesting idea of bot telling you how high are you.
-    # check him out on Twitter if you want @croeystoey!
-
-    #theEnd=time.sleep(1)
-    #msgDelet=await client.delete_message(msg9)
 
 client.run(TOKEN)  # Where 'TOKEN' is your bot token
