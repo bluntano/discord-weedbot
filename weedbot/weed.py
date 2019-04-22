@@ -93,7 +93,7 @@ async def eed(ctx): # lol eed
             player = vc.create_ffmpeg_player('weed.mp3')
             player.start()
             while not player.is_done():
-                await time.sleep(1)
+                await asyncio.sleep(1)
 
             # Disconnects when it's done playing
             player.stop()
