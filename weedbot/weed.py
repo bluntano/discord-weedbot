@@ -70,9 +70,13 @@ async def eed(ctx): # lol eed
     msg9=await client.edit_message(msg8, "You are {}% high, my dude!".format(x))
 
     # Imports 'randpic.py' script, and gives the 'weed.py' which picture to post
-    from randpic import randomPic
+    #from randpic import randomPic
     #test = print(randomPic())
-    picture = randomPic()
+    #picture = randomPic()
+
+    # The Randpic v2.0 (Slightly better)
+    from randpic2 import pickRand
+    picture = pickRand()
     msgPicture=await client.send_file(ctx.message.channel, picture)
 
     # New Feature: if the highness from weed is above a certain value, it will play a 3-second music sample
