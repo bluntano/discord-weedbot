@@ -15,5 +15,6 @@ def pickRand():
         x for x in os.listdir(path)
         if os.path.isfile(os.path.join(path, x))
     ])
-    #print(random_filename)
-    return random_filename
+    folder = "./bb/"
+    filename = folder + random_filename
+    return filename
