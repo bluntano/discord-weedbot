@@ -64,7 +64,7 @@ async def eed(ctx): # lol eed
     # Pick a random number between 0 and 101.
     x = randint(0, 101)
 
-    # Last message content editing
+    # Last message being deleted
     msgWait9=time.sleep(speed)
     msg9=await client.delete_message(msg8)
 
@@ -73,17 +73,16 @@ async def eed(ctx): # lol eed
     from DropboxFilePicker import RandomPicture
     picture = RandomPicture()
 
+    # User tag
     user = ctx.message.author
     usertag = str(user)
 
+    # Discord Embed message
     TheWeed = discord.Embed(color=0x00ff00)
     TheWeed.set_image(url=picture)
     TheWeed.add_field(name="User: @" + usertag, value="You are {}% high, my dude!".format(x))
-
     msgPicture=await client.send_message(ctx.message.channel, embed=TheWeed)
 
-    # New Feature: if the highness from weed is above a certain value, it will play a 3-second music sample
-    # as long as the author is in VC
     if x > 50: # if the x value is higher than 50
 
         # Gathers the command autor and the voice channel
