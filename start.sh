@@ -17,4 +17,4 @@ python3 -m pip install --upgrade pip --user
 
 # Finally, start the bot
 cd weedbot/
-python3 weed.py
+python3 WeedBot.py
