@@ -1,6 +1,7 @@
 # This is the Python bot.
 import os
 import time
+import glob
 
 from random import *
 
@@ -39,7 +40,7 @@ async def on_command_error(error, ctx):
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
-@commands.cooldown(1, 15, commands.BucketType.server) # on this, weed command cooldown has set to 15 seconds
+@commands.cooldown(1, 20, commands.BucketType.server) # on this, weed command cooldown has set to 20 seconds
 async def eed(ctx): # lol eed
 
     # Starting to smoke!!!! 420 blaze it!!! (Edits one message 9 times)
@@ -61,27 +62,36 @@ async def eed(ctx): # lol eed
     msgWait8=time.sleep(speed)
     msg8=await client.edit_message(msg7, "🚬")
 
-    # Pick a random number between 0 and 101.
-    x = randint(0, 101)
+    # Picks a random number between 0 and 100.
+    x = randint(0, 100)
 
-    # Last message being deleted
+    # User tag
+    user = ctx.message.author.id
+    usertag = str(user)
+
+    # Last message being edited
     msgWait9=time.sleep(speed)
-    msg9=await client.delete_message(msg8)
+    #msg9=await client.edit_message(msg8, "<@" + usertag + "> You are {}% high, my dude!".format(x))
+    msgDelete = await client.delete_message(msg8)
 
     # Dropbox File Picker/Random Picture Picker
     # I needed a better, more convenient way to store these anime/non-anime blunt pictures, my boi
-    from DropboxFilePicker import RandomPicture
-    picture = RandomPicture()
+    from modules import DropboxFilePicker
+    picture = DropboxFilePicker.RandomPicture()
 
-    # User tag
-    user = ctx.message.author
-    usertag = str(user)
-
+    """
     # Discord Embed message
     TheWeed = discord.Embed(color=0x00ff00)
     TheWeed.set_image(url=picture)
     TheWeed.add_field(name="User: @" + usertag, value="You are {}% high, my dude!".format(x))
     msgPicture=await client.send_message(ctx.message.channel, embed=TheWeed)
+
+    """
+
+    # Looks for the picture file that just got downloaded with file picker
+    # With either .png or .jpg extension, depending on the picture downloaded
+    for file in glob.glob("*.png") or glob.glob("*.jpg"):
+        msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> You are {}% high, my dude!".format(x))
 
     if x > 50: # if the x value is higher than 50
 
