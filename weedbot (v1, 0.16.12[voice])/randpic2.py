@@ -1,7 +1,7 @@
 import os
 
 # Reads the folder's content
-path = r"./pic/"
+path = r"./bb/"
 
 # Important stuff to make random choice to work
 from random import choice
@@ -15,6 +15,6 @@ def pickRand():
         x for x in os.listdir(path)
         if os.path.isfile(os.path.join(path, x))
     ])
-    folder = "./pic/"
+    folder = "./bb/"
     filename = folder + random_filename
     return filename
