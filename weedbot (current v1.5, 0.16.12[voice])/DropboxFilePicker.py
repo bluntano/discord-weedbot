@@ -56,9 +56,6 @@ def RandomPicture():
     #print(FileExtension)
 
     # Takes the file name and gets a temporary link for the image
-    # Why temporary link? So that Discord could actually show the picture.
-    # It won't show the picture with the regular shared link
-    # (Temporary links also have automatic time limit)
     URL = dbx.files_get_temporary_link(path=WeedPictures + FileResult).link
     file_url = str(URL)
     #print(file_url)
