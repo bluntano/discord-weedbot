@@ -11,9 +11,9 @@ I got inspiration from [this JavaScript code I found on Plexi Development's page
 In order to make your own, you will need:
 - `discord.py[voice]==0.16.12` to make it work, duh.  You can find it in [here!](https://libraries.io/pypi/discord.py)
 - `dotenv` to take your Discord bot's token from `.env` file
-- `dropbox` to take your weed pics from Dropbox cloud storage instead of storing pictures locally (v1 prototype of the bot is also available if you don't want to set up Dropbox)
+- `dropbox` to take your weed pics from Dropbox cloud storage instead of storing pictures locally
 
-*If you want to use it on Node.js engine like me, make sure you change the weedbot version folder into simply weedbot, so the shell script could execute the right thing from right folder.*
+Just do `pip install --user -r requirements.txt` and you should be good to go.
 
 I'll get into upgrading from discord.py 0.16.12 to the newest version as well ASAP.
 
