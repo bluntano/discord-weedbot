@@ -1,19 +1,19 @@
 # This is the Python bot.
+# Licensed under MIT license
+# Copyright (c) 2019 Bluntano
 import os
 import time
 import glob
 
 from random import *
 
-# Taking token and other stuff from .env file
-import dotenv
-from os.path import join, dirname
-from dotenv import Dotenv
-dotenv = Dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-os.environ.update(dotenv)
+# Taking token and other stuff from token.json file
+import json
+file = open('token.json')
+content = json.load(file)
 
-# Thats a discord bot token from that .env file
-TOKEN = os.environ.get("TOKEN")
+# Discord Bot token
+TOKEN = content['discord_token']
 
 # Now it's time to import discord and do the weed stuff
 import discord
