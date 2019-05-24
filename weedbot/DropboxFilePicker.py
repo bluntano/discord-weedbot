@@ -1,3 +1,7 @@
+# =====================================================
+# Licensed under MIT license
+# Copyright (c) 2019 Bluntano
+# =====================================================
 # Script which picks a random picks from Dropbox cloud
 import os
 import dropbox
