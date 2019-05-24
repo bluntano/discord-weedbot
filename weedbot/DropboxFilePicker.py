@@ -4,18 +4,17 @@ import dropbox
 
 from random import *
 
-# Taking token and other stuff from .env file
-import dotenv
-from os.path import join, dirname
-from dotenv import Dotenv
-dotenv = Dotenv(os.path.join(os.path.dirname(__file__), "../.env"))
-os.environ.update(dotenv)
+# Taking token and other stuff from token.json file
+import json
+file = open('token.json')
+content = json.load(file)
+
+# Dropbox app token, taken from the json file
+token = content['dbx_token']
+#print(token)
 
 # urllib - for downloading the picture from temp link
 import urllib.request
-
-# Thats a Dropbox app token from that .env file
-DROPBOX_TOKEN = os.environ.get("DBX_TOKEN")
 
 # Activating Dropbox and path from where to take pictures
 dbx = dropbox.Dropbox(DROPBOX_TOKEN)
@@ -70,6 +69,3 @@ def RandomPicture():
         print("Picture does not exist! Downloading one...")
 
     DownloadPic = urllib.request.urlretrieve(url=file_url, filename='./picture' + "." + FileExtension)
-
-# for testing purposes separately with the file picker, uncomment the function call below
-#RandomPicture()
