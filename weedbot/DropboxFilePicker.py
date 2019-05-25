@@ -15,13 +15,12 @@ content = json.load(file)
 
 # Dropbox app token, taken from the json file
 token = content['dbx_token']
-#print(token)
 
 # urllib - for downloading the picture from temp link
 import urllib.request
 
 # Activating Dropbox and path from where to take pictures
-dbx = dropbox.Dropbox(DROPBOX_TOKEN)
+dbx = dropbox.Dropbox(token)
 WeedPictures = '/weed_pictures/'
 
 # Random Picture function
@@ -73,3 +72,6 @@ def RandomPicture():
         print("Picture does not exist! Downloading one...")
 
     DownloadPic = urllib.request.urlretrieve(url=file_url, filename='./picture' + "." + FileExtension)
+
+# for testing purposes, uncomment the function call below
+#RandomPicture()
