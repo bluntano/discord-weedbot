@@ -7,7 +7,7 @@ import glob
 
 from random import *
 
-# Taking token and other stuff from token.json file
+# Taking token and other stuff from .env file
 import json
 file = open('token.json')
 content = json.load(file)
