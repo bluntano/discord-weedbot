@@ -38,6 +38,35 @@ async def on_command_error(error, ctx):
         return
     raise error  # re-raise the error so all the errors will still show up in console
 
+# Looks for them weed pictures in particular text channel
+@client.event
+async def on_message(message):
+
+    # Allow 'weed'/'Weed' or other commands in general to work
+    await client.process_commands(message) 
+
+    # If message author is bot or the bot itselt, ignore.
+    if message.author == client.user:
+        return
+    elif message.author.bot == True:
+        return
+    else:
+        # Look for channel by name '#weedpic-requests'
+        channel = discord.utils.get(message.server.channels, name='weedpic-requests', type=discord.ChannelType.text)
+
+        # If it's not the weedpic-requests channel
+        if message.channel != channel:
+            return
+        else:
+            # If the message doesn't have attachments
+            if message.attachments == []:
+                return
+            else:
+                # Take the link, and start the upload process
+                link = message.attachments[0]['url']
+                import FileUploader
+                FileUploader.upload_picture_to_dropbox(url=link)
+
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
 @commands.cooldown(1, 20, commands.BucketType.server) # on this, weed command cooldown has set to 20 seconds
