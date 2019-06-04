@@ -64,8 +64,25 @@ async def on_message(message):
             else:
                 # Take the link, and start the upload process
                 link = message.attachments[0]['url']
-                import FileUploader
-                FileUploader.upload_picture_to_dropbox(url=link)
+                import DropboxFileUploader
+                msg_status = await client.send_message(message.channel, "**Uploading**")
+                DropboxFileUploader.upload_picture_to_dropbox(url=link)
+                status = DropboxFileUploader.upload_picture_to_dropbox.is_uploaded
+                while True:
+                    msg1 = await client.edit_message(msg_status, "**Uploading.**")
+                    time.sleep(0.25)
+                    msg1 = await client.edit_message(msg_status, "**Uploading..**")
+                    time.sleep(0.25)
+                    msg1 = await client.edit_message(msg_status, "**Uploading...**")
+                    time.sleep(0.25)
+                    if status == True or False:
+                        await client.delete_message(msg1)
+                        break
+                    
+                if status == True:
+                    await client.send_message(message.channel, "**✅ Uploaded!**")
+                elif status == False:
+                    await client.send_message(message.channel, "**❌ There was a problem uploading that picture. Please try again later!**")
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
