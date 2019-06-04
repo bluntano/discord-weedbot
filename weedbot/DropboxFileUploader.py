@@ -18,6 +18,7 @@
 # Copyright (c) 2019 Bluntano
 # ==================================================================================================
 import os
+import sys
 import dropbox
 
 import requests
@@ -85,8 +86,12 @@ def upload_picture_to_dropbox(url):
         try:
             dbx.files_upload(f.read(), '/weed_pictures/' + str(x) + extension, mute=True)
             print("Done!")
+            upload_picture_to_dropbox.is_uploaded = True
+            return True
         except Exception as e:
             print("Error occured:", e)
+            upload_picture_to_dropbox.is_uploaded = False
+            return False
 
 # For testing purposes, uncomment function call below this comment.
 #upload_picture_to_dropbox()
