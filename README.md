@@ -1,6 +1,7 @@
 # discord-weedbot
 
 a bot that smokes some dank-ass weed, my nigguhs! also it will tell you how high you are. very nice eh? xd
+it even uploads weed pics to dropbox from #weedpic-request text channel, holy moly
 #
 ![](/res/image.png)
 
@@ -10,7 +11,6 @@ I got inspiration from [this JavaScript code I found on Plexi Development's page
 
 In order to make your own, you will need:
 - `discord.py[voice]==0.16.12` to make it work, duh.  You can find it in [here!](https://libraries.io/pypi/discord.py)
-- `dotenv` to take your Discord bot's token from `.env` file
 - `dropbox` to take your weed pics from Dropbox cloud storage instead of storing pictures locally
 
 Just do `pip install --user -r requirements.txt` and you should be good to go.
