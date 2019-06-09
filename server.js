@@ -12,6 +12,35 @@ app.get('/', function (req, res) {
 })
  
 app.listen(3000)
+deletePictures()
+startWeedbot()
 
-var execSh = require('exec-sh')
-execSh("sh start.sh")
+function startWeedbot() {
+	
+	console.log("== Starting the Weedbot via start.sh ==")
+	try {
+		var execSh = require('exec-sh')
+		execSh("sh start.sh")
+	}
+	catch(err) {
+		console.log("Failed to start: " + err)
+	}
+	return
+}
+
+function deletePictures(isDelete = true) {
+	
+	if (isDelete === true) {
+		console.log("== Deleting pictures ==")
+		var fs = require("fs-extra")
+		try {
+			fs.removeSync('./weedbot/upload-pictures')
+		}
+		catch (err) {
+			console.log("Deletion failed: " + err)
+		}
+	} else if (isDelete == false) {
+		return
+	}
+	return
+}
