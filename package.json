@@ -6,6 +6,7 @@
   "version": "0.0.69",
   "dependencies": {
     "exec-sh": "^0.3.2",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "fs-extra": "^8.0.1"
   }
 }
