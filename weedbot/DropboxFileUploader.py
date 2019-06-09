@@ -68,19 +68,18 @@ def upload_picture_to_dropbox(url):
         os.mkdir('./upload-pictures/')
 
     # Download picture from Discord attachments server
-    # (Keep in mind, urllib or wget does not work, it is one protected server)
-    # (Returns with HTTPError number 403: Forbidden)
     headers = {
     'User-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'
     }
+	upload_path = './upload-pictures/' + str(x) + extension
     r = requests.get(url=url, headers=headers, stream=True)
-    with open('./upload-pictures/' + str(x) + extension, 'wb') as f:
+    with open(upload_path, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
     
     # Read the just downloaded picture and upload it to Dropbox
-    with open('./upload-pictures/' + str(x) + extension, 'rb') as f:
+    with open(upload_path, 'rb') as f:
         print("===========================================")
         print("Uploading picture to Dropbox")
         try:
