@@ -8,13 +8,20 @@
 export PYTHONUNBUFFERED=true
 
 # Make sure you have Python 3.5 installed (e.g. 3.5.2)
-python3 --version
-python3 -m pip install --upgrade pip --user
+pythonversion=$(python3 --version)
+vernum="3.5.2"
 
-# Install the requirements
-# Uncomment the command below to install from the requirements file
-#pip3 install -r ./weedbot/req.txt --user
+if [[ $pythonversion =~ $vernum ]];
+then
+	python3 -m pip install --upgrade pip --user
 
-# Finally, start the bot
-cd weedbot/
-python3 WeedBot.py
+	# Install the requirements
+	# Uncomment the command below to install from the requirements file
+	cd weedbot
+	pip3 install -r req.txt --user
+
+	# Finally, start the bot
+	python3 WeedBot.py
+else
+	echo "Failed to run :("
+fi
