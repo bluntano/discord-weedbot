@@ -48,6 +48,7 @@ def upload_picture_to_dropbox(url):
     elif url.endswith(jpg):
         extension = '.jpg'
     else:
+        print("Submitted file is not a picture:", url)
         return
 
     # Counts up files in a folder (IMPORTANT!!!)
