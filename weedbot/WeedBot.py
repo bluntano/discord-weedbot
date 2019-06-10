@@ -81,11 +81,11 @@ async def on_message(message):
                         break
                     elif status == False:
                         await client.delete_message(msg1)
-                        await client.send_message(message.channel, "**❌ There was a problem uploading that picture. Please try again later!**")
+                        await client.send_message(message.channel, "**❌ There was a problem uploading the picture. Please try again later!**")
                         break
                     elif status == None:
                         await client.delete_message(msg1)
-                        await client.send_message(message.channel, "**❌ An error occured whilst in process of preparing to upload. Please try again later!**")
+                        await client.send_message(message.channel, "**❌ An error occured in the process of preparing to upload. Please try again later!**")
                         break
 
 # The juicy stuff here (command event)
