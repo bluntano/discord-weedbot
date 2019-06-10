@@ -52,7 +52,7 @@ async def on_message(message):
         return
     else:
         # Look for channel by name '#weedpic-requests'
-        channel = discord.utils.get(message.server.channels, name='bots-test', type=discord.ChannelType.text)
+        channel = discord.utils.get(message.server.channels, name='weedpic-requests', type=discord.ChannelType.text)
 
         # If it's not the weedpic-requests channel
         if message.channel != channel:
