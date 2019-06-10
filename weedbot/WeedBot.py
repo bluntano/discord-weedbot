@@ -52,7 +52,7 @@ async def on_message(message):
         return
     else:
         # Look for channel by name '#weedpic-requests'
-        channel = discord.utils.get(message.server.channels, name='weedpic-requests', type=discord.ChannelType.text)
+        channel = discord.utils.get(message.server.channels, name='bots-test', type=discord.ChannelType.text)
 
         # If it's not the weedpic-requests channel
         if message.channel != channel:
@@ -75,14 +75,18 @@ async def on_message(message):
                     time.sleep(0.25)
                     msg1 = await client.edit_message(msg_status, "**Uploading...**")
                     time.sleep(0.25)
-                    if status == True or False:
+                    if status == True:
                         await client.delete_message(msg1)
+                        await client.send_message(message.channel, "**✅ Uploaded!**")
                         break
-                    
-                if status == True:
-                    await client.send_message(message.channel, "**✅ Uploaded!**")
-                elif status == False:
-                    await client.send_message(message.channel, "**❌ There was a problem uploading that picture. Please try again later!**")
+                    elif status == False:
+                        await client.delete_message(msg1)
+                        await client.send_message(message.channel, "**❌ There was a problem uploading that picture. Please try again later!**")
+                        break
+                    elif status == None:
+                        await client.delete_message(msg1)
+                        await client.send_message(message.channel, "**❌ An error occured whilst in process of preparing to upload. Please try again later!**")
+                        break
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
