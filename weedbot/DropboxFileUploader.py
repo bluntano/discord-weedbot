@@ -69,10 +69,10 @@ def upload_picture_to_dropbox(url):
         os.mkdir('./upload-pictures/')
 
     # Download picture from Discord attachments server
+	upload_path = './upload-pictures/' + str(x) + extension
     headers = {
     'User-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'
     }
-	upload_path = './upload-pictures/' + str(x) + extension
     r = requests.get(url=url, headers=headers, stream=True)
     with open(upload_path, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
