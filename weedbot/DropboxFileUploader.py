@@ -62,7 +62,8 @@ def upload_picture_to_dropbox(url):
     x = FileCount + 1
     #print('{}'.format(x))
 	
-	upload_path = './upload-pictures/' + str(x) + extension
+	# The upload path variable for better... code, idk
+    upload_path = './upload-pictures/' + str(x) + extension
 
     # Make a folder called 'upload-pictures' if it doesn't already exist
     while not os.path.exists('./upload-pictures/'):
