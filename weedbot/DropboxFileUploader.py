@@ -61,15 +61,14 @@ def upload_picture_to_dropbox(url):
     FileCount = len(fname)
     x = FileCount + 1
     #print('{}'.format(x))
+	
+	upload_path = './upload-pictures/' + str(x) + extension
 
     # Make a folder called 'upload-pictures' if it doesn't already exist
     while not os.path.exists('./upload-pictures/'):
         print("===========================================")
         print("Making directory for new received pictures")
         os.mkdir('./upload-pictures/')
-
-	
-	upload_path = './upload-pictures/' + str(x) + extension
 
     # Download picture from Discord attachments server
     headers = {
