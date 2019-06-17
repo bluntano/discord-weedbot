@@ -2,7 +2,6 @@
 # Licensed under MIT license
 # Copyright (c) 2019 Bluntano
 import os
-import time
 import glob
 
 from random import *
@@ -22,7 +21,7 @@ import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
 client = Bot(command_prefix = ["w", "W"])
-speed=0.01 # how fast will it edit the message
+speed=0.1 # how fast will it edit the message
 
 # when its ready
 @client.event
@@ -65,51 +64,42 @@ async def on_message(message):
                 # Take the link, and start the upload process
                 link = message.attachments[0]['url']
                 import DropboxFileUploader
-                msg_status = await client.send_message(message.channel, "**Uploading**")
                 DropboxFileUploader.upload_picture_to_dropbox(url=link)
                 status = DropboxFileUploader.upload_picture_to_dropbox.is_uploaded
                 while True:
-                    msg1 = await client.edit_message(msg_status, "**Uploading.**")
-                    time.sleep(0.25)
-                    msg1 = await client.edit_message(msg_status, "**Uploading..**")
-                    time.sleep(0.25)
-                    msg1 = await client.edit_message(msg_status, "**Uploading...**")
-                    time.sleep(0.25)
+                    msg_status = await client.send_message(message.channel, "⏳ Uploading")
                     if status == True:
-                        await client.delete_message(msg1)
-                        await client.send_message(message.channel, "**✅ Uploaded!**")
+                        await client.edit_message(msg_status, "✅ Uploaded!")
                         break
                     elif status == False:
-                        await client.delete_message(msg1)
-                        await client.send_message(message.channel, "**❌ There was a problem uploading the picture. Please try again later!**")
+                        await client.edit_message(msg_status, "❌ There was a problem uploading the picture. Please try again later!")
                         break
                     elif status == None:
-                        await client.delete_message(msg1)
-                        await client.send_message(message.channel, "**❌ An error occured in the process of preparing to upload. Please try again later!**")
+                        await client.edit_message(msg_status, "❌ Unknown / Unsupported file extension!")
                         break
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
-@commands.cooldown(1, 20, commands.BucketType.server) # on this, weed command cooldown has set to 20 seconds
+@commands.cooldown(1, 18, commands.BucketType.server) # on this, weed command cooldown has set to 18 seconds
 async def eed(ctx): # lol eed
 
     # Starting to smoke!!!! 420 blaze it!!! (Edits one message 9 times)
     msg=await client.send_message(ctx.message.channel, "Starting to smoke")
-    msgWait=time.sleep(3)
+    await asyncio.sleep(1)
     msg1=await client.edit_message(msg, "🚬")
-    msgWait2=time.sleep(speed)
+    msgWait2=asyncio.sleep(speed)
     msg2=await client.edit_message(msg1, "🚬☁")
-    msgWait3=time.sleep(speed)
+    msgWait3=asyncio.sleep(speed)
     msg3=await client.edit_message(msg2, "🚬☁☁")
-    msgWait4=time.sleep(speed)
+    msgWait4=asyncio.sleep(speed)
     msg4=await client.edit_message(msg3, "🚬☁☁☁")
-    msgWait5=time.sleep(5)
+    msgWait5=asyncio.sleep(5)
     msg5=await client.edit_message(msg4, "🚬☁☁☁")
-    msgWait6=time.sleep(speed)
+    msgWait6=asyncio.sleep(speed)
     msg6=await client.edit_message(msg5, "🚬☁☁")
-    msgWait7=time.sleep(speed)
+    msgWait7=asyncio.sleep(speed)
     msg7=await client.edit_message(msg6, "🚬☁")
-    msgWait8=time.sleep(speed)
+    msgWait8=asyncio.sleep(speed)
     msg8=await client.edit_message(msg7, "🚬")
 
     # Picks a random number between 0 and 100.
@@ -120,7 +110,7 @@ async def eed(ctx): # lol eed
     usertag = str(user)
 
     # Last message being edited
-    msgWait9=time.sleep(speed)
+    msgWait9=asyncio.sleep(speed)
     #msg9=await client.edit_message(msg8, "<@" + usertag + "> You are {}% high, my dude!".format(x))
     msgDelete = await client.delete_message(msg8)
 
@@ -129,18 +119,9 @@ async def eed(ctx): # lol eed
     import DropboxFilePicker
     picture = DropboxFilePicker.RandomPicture()
 
-    """
-    # Discord Embed message
-    TheWeed = discord.Embed(color=0x00ff00)
-    TheWeed.set_image(url=picture)
-    TheWeed.add_field(name="User: @" + usertag, value="You are {}% high, my dude!".format(x))
-    msgPicture=await client.send_message(ctx.message.channel, embed=TheWeed)
-
-    """
-
     # Looks for the picture file that just got downloaded with file picker
     # With either .png or .jpg extension, depending on the picture downloaded
-    for file in glob.glob("*.png") or glob.glob("*.jpg"):
+    for file in glob.glob("*.png") or glob.glob("*.jpg") or glob.glob("*.gif"):
         msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> You are {}% high, my dude!".format(x))
 
     if x > 50: # if the x value is higher than 50

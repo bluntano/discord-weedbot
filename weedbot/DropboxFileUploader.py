@@ -18,7 +18,6 @@
 # Copyright (c) 2019 Bluntano
 # ==================================================================================================
 import os
-import sys
 import dropbox
 
 import requests
@@ -41,14 +40,18 @@ def upload_picture_to_dropbox(url):
     # File extensions
     png = 'png'
     jpg = 'jpg'
+    gif = 'gif'
 
     # If the link ends with with either .png or .jpg file extension
     if url.endswith(png):
         extension = '.png'
     elif url.endswith(jpg):
         extension = '.jpg'
+    elif url.endswith(gif):
+        extension = '.gif'
     else:
         print("Submitted file is not a picture:", url)
+        upload_picture_to_dropbox.is_uploaded = None
         return
 
     # Counts up files in a folder (IMPORTANT!!!)
@@ -86,14 +89,12 @@ def upload_picture_to_dropbox(url):
         print("===========================================")
         print("Uploading picture to Dropbox")
         try:
-            dbx.files_upload(f.read(), '/weed_pictures/' + str(x) + extension, mute=True)
-            print("Done!")
+            dbx.files_upload(f.read(), WeedPictures + '/' + str(x) + extension, mute=True)
             upload_picture_to_dropbox.is_uploaded = True
-            return True
+            return print("Done!")
         except Exception as e:
-            print("Error occured:", e)
             upload_picture_to_dropbox.is_uploaded = False
-            return False
+            return print("Error occured:", e)
 
 # For testing purposes, uncomment function call below this comment.
 #upload_picture_to_dropbox()

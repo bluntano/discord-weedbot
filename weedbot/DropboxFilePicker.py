@@ -68,6 +68,8 @@ def RandomPicture():
         os.remove("./picture.png")
     elif os.path.exists("./picture.jpg"):
         os.remove("./picture.jpg")
+    elif os.path.exists("./picture.gif"):
+        os.remove("./picture.gif")
     else:
         print("Picture does not exist! Downloading one...")
 
