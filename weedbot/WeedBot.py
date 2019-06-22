@@ -80,7 +80,7 @@ async def on_message(message):
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
-@commands.cooldown(1, 18, commands.BucketType.server) # on this, weed command cooldown has set to 18 seconds
+@commands.cooldown(1, 12, commands.BucketType.server) # on this, weed command cooldown has set to 18 seconds
 async def eed(ctx): # lol eed
 
     # Starting to smoke!!!! 420 blaze it!!! (Edits one message 9 times)
