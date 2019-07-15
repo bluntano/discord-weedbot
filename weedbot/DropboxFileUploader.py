@@ -27,6 +27,9 @@ import json
 tokens = open('token.json')
 content = json.load(tokens)
 
+# For video file extension
+from pymediainfo import MediaInfo
+
 # Dropbox app token, taken from the json file
 token = content['dbx_token']
 
@@ -41,14 +44,20 @@ def upload_picture_to_dropbox(url):
     png = 'png'
     jpg = 'jpg'
     gif = 'gif'
+    mp4 = 'mp4'
+    mov = 'mov'
 
-    # If the link ends with with either .png or .jpg file extension
+    # Supported extensions
     if url.endswith(png):
         extension = '.png'
     elif url.endswith(jpg):
         extension = '.jpg'
     elif url.endswith(gif):
         extension = '.gif'
+    elif url.endswith(mp4):
+        extension = '.mp4'
+    elif url.endswith(mov):
+        extension = '.mov'
     else:
         print("Submitted file is not a picture:", url)
         upload_picture_to_dropbox.is_uploaded = None
@@ -83,6 +92,28 @@ def upload_picture_to_dropbox(url):
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
+    
+    # For checking if the file uploaded to the server is mp4 and
+    # before uploading it to Dropbox.
+    if extension is mp4 or mov:
+        media_info = MediaInfo.parse(upload_path)
+        t = media_info.tracks[0]
+        filesize = t.to_data()["file_size"]
+        if filesize > 3300000:
+            upload_picture_to_dropbox.is_uploaded = "FileTooBig"
+            os.remove(upload_path)
+            return
+        else:
+            for track in media_info.tracks:
+                if track.track_type == 'Video':
+                    width = track.width
+                    height = track.height
+                    print("Video resolution: {}x{}".format(track.width, track.height))
+                    if width < 100 or height < 75:
+                        upload_picture_to_dropbox.is_uploaded = "DimensionsTooSmall"
+                        os.remove(upload_path)
+                        return
+
     
     # Read the just downloaded picture and upload it to Dropbox
     with open(upload_path, 'rb') as f:
