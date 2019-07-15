@@ -5,6 +5,7 @@ import os
 import glob
 
 from random import *
+from random import choice
 
 # Taking token and other stuff from .env file
 import json
@@ -77,6 +78,12 @@ async def on_message(message):
                     elif status == None:
                         await client.edit_message(msg_status, "❌ Unknown / Unsupported file extension!")
                         break
+                    elif status == "FileTooBig":
+                        await client.edit_message(msg_status, "❌ Failed to upload: Video file size is bigger than 3.3 MB!")
+                        break
+                    elif status == "DimensionsTooSmall":
+                        await client.edit_message(msg_status, "❌ Failed to upload: Video dimensions are too small!")
+                        break
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
@@ -109,6 +116,35 @@ async def eed(ctx): # lol eed
     user = ctx.message.author.id
     usertag = str(user)
 
+    # Custom messages
+    twentyfive_set = [
+        "Oh wow! Just {}% high? Man, you love no weed I see :/",
+        "That sucks! {}% on weed... try better next time",
+        "You didn't smoke at all! Only {}% high huh. We gave you the blunt for a reason smh",
+        "FUCKIN' SMOKE IT PROPERLY, WE ABT TO GET HIGH, NOT TO STAY SOBER!!1! {}% high >:/"
+    ]
+
+    fifty_set = [
+        "Nice blunt you got there! {}% high",
+        "Make sure you'll go all the way to a hundred. Good job! {}% high",
+        "You can be higher than {}%, come on, dude! :D",
+        "...did Seth give you that rolled weed? No wonder you're {}% high"
+    ]
+
+    seventyfive_set = [
+        "SMOK WED EVRIDAY!!! {}%",
+        "NICEEEEEEEE!!! {}%",
+        "All the way to 100 from {}%, babyyyyyyyyyy!!!",
+        "You know well how to smoke some good-ass grass! Your {}% highness explains it well ;)"
+    ]
+
+    hundred_set = [
+        "WOOOWW YOU ARE HIIIIIGHHHH!!! {}%",
+        "Seth is gay, keep smoking dank-ass weed ;3 get higher than {}%",
+        "WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAH {}% High",
+        "You're a weed legend, my dude! {}% highness is not baaaaad!!!"
+    ]
+
     # Last message being edited
     msgWait9=asyncio.sleep(speed)
     #msg9=await client.edit_message(msg8, "<@" + usertag + "> You are {}% high, my dude!".format(x))
@@ -121,8 +157,20 @@ async def eed(ctx): # lol eed
 
     # Looks for the picture file that just got downloaded with file picker
     # With either .png or .jpg extension, depending on the picture downloaded
-    for file in glob.glob("*.png") or glob.glob("*.jpg") or glob.glob("*.gif"):
-        msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> You are {}% high, my dude!".format(x))
+    asyncio.sleep(2)
+    for file in glob.glob("picture.*"):
+        if x <= 25:
+            msgcontent = choice(twentyfive_set)
+            msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
+        elif x <= 50:
+            msgcontent = choice(fifty_set)
+            msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
+        elif x >= 75:
+            msgcontent = choice(seventyfive_set)
+            msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
+        elif x >= 100:
+            msgcontent = choice(hundred_set)
+            msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
 
     if x > 50: # if the x value is higher than 50
 
