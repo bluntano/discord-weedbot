@@ -7,6 +7,7 @@ import os
 import dropbox
 
 from random import *
+import glob
 
 # Taking token and other stuff from token.json file
 import json
@@ -64,16 +65,16 @@ def RandomPicture():
 
     # Checks the picture file, removes the picture which was previously
     # downloaded if it exists
-    if os.path.exists("./picture.png"):
-        os.remove("./picture.png")
-    elif os.path.exists("./picture.jpg"):
-        os.remove("./picture.jpg")
-    elif os.path.exists("./picture.gif"):
-        os.remove("./picture.gif")
-    else:
-        print("Picture does not exist! Downloading one...")
+    for pic_file in glob.glob('picture.*'):
+        if os.path.exists(pic_file):
+            os.remove(pic_file)
+        elif os.path.exist('picture.' + FileExtension):
+            os.remove('picture.' + FileExtension)
+        else:
+            print("Picture does not exist! Downloading one...")
 
     DownloadPic = urllib.request.urlretrieve(url=file_url, filename='./picture' + "." + FileExtension)
+    return
 
 # for testing purposes, uncomment the function call below
 #RandomPicture()
