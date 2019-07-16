@@ -157,7 +157,7 @@ async def eed(ctx): # lol eed
 
     # Looks for the picture file that just got downloaded with file picker
     # With either .png or .jpg extension, depending on the picture downloaded
-    asyncio.sleep(2)
+    asyncio.sleep(5)
     for file in glob.glob("picture.*"):
         if x <= 25:
             msgcontent = choice(twentyfive_set)
@@ -165,10 +165,10 @@ async def eed(ctx): # lol eed
         elif x <= 50:
             msgcontent = choice(fifty_set)
             msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
-        elif x >= 75:
+        elif x <= 75:
             msgcontent = choice(seventyfive_set)
             msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
-        elif x >= 100:
+        elif x <= 100:
             msgcontent = choice(hundred_set)
             msgPicture=await client.send_file(ctx.message.channel, "./" + file, content="<@" + usertag + "> " + msgcontent.format(x))
 
