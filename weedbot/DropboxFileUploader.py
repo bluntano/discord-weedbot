@@ -96,7 +96,7 @@ def upload_picture_to_dropbox(url):
     # For checking if the file uploaded to the server is mp4 and
     # before uploading it to Dropbox.
     if extension is mp4 or mov:
-        media_info = MediaInfo.parse(upload_path)
+        media_info = MediaInfo.parse(upload_path, library_file='./mediainfo/libmediainfo.so.0')
         t = media_info.tracks[0]
         filesize = t.to_data()["file_size"]
         if filesize > 3300000:
