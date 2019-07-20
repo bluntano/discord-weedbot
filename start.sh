@@ -4,7 +4,7 @@
 # It also has a pip command that is required to execute before launching the bot.
 # Otherwise the bot won't start up.
 
-# for portable MediaInfo library (I think it's the linux one)
+# portable MediaInfo library for Linux (otherwise is taken from the system library folder instead)
 export LD_LIBRARY_PATH=~/weedbot/mediainfo/
 
 # Make sure you have Python 3.5 installed (e.g. 3.5.2)
