@@ -22,16 +22,14 @@ import dropbox
 
 import requests
 
-# Taking token and other stuff from token.json file
-import json
-tokens = open('token.json')
-content = json.load(tokens)
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
+
+# Dropbox app token, taken from the json file
+token = os.getenv("DROPBOX")
 
 # For video file extension
 from pymediainfo import MediaInfo
-
-# Dropbox app token, taken from the json file
-token = content['dbx_token']
 
 # Activating Dropbox and path from where to take pictures
 dbx = dropbox.Dropbox(token)

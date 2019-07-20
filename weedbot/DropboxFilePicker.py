@@ -9,13 +9,11 @@ import dropbox
 from random import *
 import glob
 
-# Taking token and other stuff from token.json file
-import json
-file = open('token.json')
-content = json.load(file)
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
 
 # Dropbox app token, taken from the json file
-token = content['dbx_token']
+token = os.getenv("DROPBOX")
 
 # urllib - for downloading the picture from temp link
 import urllib.request

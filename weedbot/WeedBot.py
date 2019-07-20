@@ -7,13 +7,11 @@ import glob
 from random import *
 from random import choice
 
-# Taking token and other stuff from .env file
-import json
-file = open('token.json')
-content = json.load(file)
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
 
 # Discord Bot token
-TOKEN = content['discord_token']
+TOKEN = os.getenv("DISCORD")
 
 # Now it's time to import discord and do the weed stuff
 import discord
