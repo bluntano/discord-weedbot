@@ -41,22 +41,22 @@ def upload_picture_to_dropbox(url):
     '''Downloads picture from given URL and stores it onto the server.'''
 
     # File extensions
-    png = 'png'
-    jpg = 'jpg'
-    gif = 'gif'
-    mp4 = 'mp4'
-    mov = 'mov'
+    png = ['PNG', 'png', 'Png']
+    jpg = ['JPG', 'jpg', 'Jpg']
+    gif = ['GIF', 'gif', 'Gif']
+    mp4 = ['MP4', 'mp4', 'Mp4']
+    mov = ['MOV', 'mov', 'Mov']
 
     # Supported extensions
-    if url.endswith(png):
+    if url.endswith(tuple(png)):
         extension = '.png'
-    elif url.endswith(jpg):
+    elif url.endswith(tuple(jpg)):
         extension = '.jpg'
-    elif url.endswith(gif):
+    elif url.endswith(tuple(gif)):
         extension = '.gif'
-    elif url.endswith(mp4):
+    elif url.endswith(tuple(mp4)):
         extension = '.mp4'
-    elif url.endswith(mov):
+    elif url.endswith(tuple(mov)):
         extension = '.mov'
     else:
         print("Submitted file is not a picture:", url)
@@ -96,7 +96,13 @@ def upload_picture_to_dropbox(url):
     # For checking if the file uploaded to the server is mp4 and
     # before uploading it to Dropbox.
     if extension is mp4 or mov:
+
+        # Linux (portable, LD_LIBRARY_PATH set in start.sh)
         media_info = MediaInfo.parse(upload_path, library_file='./mediainfo/libmediainfo.so.0')
+
+        # Windows (high chance Windows has MediaInfo library installed)
+        #media_info = MediaInfo.parse(upload_path)
+
         t = media_info.tracks[0]
         filesize = t.to_data()["file_size"]
         if filesize > 3300000:
@@ -118,7 +124,7 @@ def upload_picture_to_dropbox(url):
     # Read the just downloaded picture and upload it to Dropbox
     with open(upload_path, 'rb') as f:
         print("===========================================")
-        print("Uploading picture to Dropbox")
+        print("Uploading picture to Dropbox:", url)
         try:
             dbx.files_upload(f.read(), WeedPictures + '/' + str(x) + extension, mute=True)
             upload_picture_to_dropbox.is_uploaded = True
