@@ -5,7 +5,7 @@
 # 1. The function gets called with link provided
 # 2. Dropbox gets also initiated, counts up the files currently in the cloud storage
 # 3. Downloads the picture from Discord attachments server, renames it to
-#    <total file count on Dropbox + 1>.png/jpg
+#    <total file count on Dropbox + 1>.png/jpg/what other extension supported
 # 4. Stores it on the server before uploading
 # 5. Takes just downloaded and renamed picture and starts uploading it to '/weed_pictures' folder on
 #    Dropbox
