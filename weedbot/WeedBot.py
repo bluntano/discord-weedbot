@@ -149,11 +149,9 @@ async def eed(ctx): # lol eed
 
     # Last message being edited
     msgWait9=asyncio.sleep(speed)
-    #msg9=await client.edit_message(msg8, "<@" + usertag + "> You are {}% high, my dude!".format(x))
     msgDelete = await client.delete_message(msg8)
 
     # Dropbox File Picker/Random Picture Picker
-    # I needed a better, more convenient way to store these anime/non-anime blunt pictures, my boi
     import DropboxFilePicker
     picture = DropboxFilePicker.RandomPicture()
 
