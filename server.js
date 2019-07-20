@@ -21,12 +21,7 @@ app.post('/git', (req, res) => {
 		  if (err) console.log(err);
 		});
 		cmd.run('refresh');  // Refresh project
-		let commits = req.body.head_commit.message.split("\n").length == 1 ?
-        req.body.head_commit.message :
-        req.body.head_commit.message.split("\n").map((el, i) => i !== 0 ? "                       " + el : el).join("\n");
-	  
-		console.log(`> [GIT] Updated with origin/master\n` +
-					`		 Latest commit: ${commits}`);
+		console.log("> [GIT] Updated with origin/master");
 	}
   
 	return res.sendStatus(200); // Send back OK status
