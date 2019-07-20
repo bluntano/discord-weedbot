@@ -119,28 +119,32 @@ async def eed(ctx): # lol eed
         "Oh wow! Just {}% high? Man, you love no weed I see :/",
         "That sucks! {}% on weed... try better next time",
         "You didn't smoke at all! Only {}% high huh. We gave you the blunt for a reason smh",
-        "FUCKIN' SMOKE IT PROPERLY, WE ABT TO GET HIGH, NOT TO STAY SOBER!!1! {}% high >:/"
+        "FUCKIN' SMOKE IT PROPERLY, WE ABT TO GET HIGH, NOT TO STAY SOBER!!1! {}% high >:/",
+        "You're not a weeder :c, you're only just {}% high... #disrespecc"
     ]
 
     fifty_set = [
         "Nice blunt you got there! {}% high",
         "Make sure you'll go all the way to a hundred. Good job! {}% high",
         "You can be higher than {}%, come on, dude! :D",
-        "...did Seth give you that rolled weed? No wonder you're {}% high"
+        "...did Seth give you that rolled weed? No wonder you're {}% high",
+        "You can do it! COME OOOON!!! {}%"
     ]
 
     seventyfive_set = [
         "SMOK WED EVRIDAY!!! {}%",
         "NICEEEEEEEE!!! {}%",
         "All the way to 100 from {}%, babyyyyyyyyyy!!!",
-        "You know well how to smoke some good-ass grass! Your {}% highness explains it well ;)"
+        "You know well how to smoke some good-ass grass! Your {}% highness explains it well ;)",
+        "Your middle name must be Weed because, holy shit! That blunt hit got you {}% high, man :D"
     ]
 
     hundred_set = [
         "WOOOWW YOU ARE HIIIIIGHHHH!!! {}%",
         "Seth is gay, keep smoking dank-ass weed ;3 get higher than {}%",
         "WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAH {}% High",
-        "You're a weed legend, my dude! {}% highness is not baaaaad!!!"
+        "You're a weed legend, my dude! {}% highness is not baaaaad!!!",
+        "WELCOME TO THE WEED CLUB BABYYYYYYYY!!!! {}% high!"
     ]
 
     # Last message being edited
