@@ -62,9 +62,9 @@ async def on_message(message):
             else:
                 # Take the link, and start the upload process
                 link = message.attachments[0]['url']
-                import DropboxFileUploader
-                DropboxFileUploader.upload_picture_to_dropbox(url=link)
-                status = DropboxFileUploader.upload_picture_to_dropbox.is_uploaded
+                import FilePickerAndUploader as FPaU
+                FPaU.Tools.upload_picture_to_dropbox(url=link)
+                status = FPaU.Tools.upload_picture_to_dropbox.is_uploaded
                 while True:
                     msg_status = await client.send_message(message.channel, "⏳ Uploading")
                     if status == True:
@@ -152,8 +152,8 @@ async def eed(ctx): # lol eed
     msgDelete = await client.delete_message(msg8)
 
     # Dropbox File Picker/Random Picture Picker
-    import DropboxFilePicker
-    picture = DropboxFilePicker.RandomPicture()
+    import FilePickerAndUploader as FPaU
+    picture = FPaU.Tools.pick_random_picture()
 
     # Looks for the picture file that just got downloaded with file picker
     # With either .png or .jpg extension, depending on the picture downloaded
