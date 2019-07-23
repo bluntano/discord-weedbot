@@ -8,3 +8,6 @@ git reset --hard origin/master
 
 # Force pull
 git pull origin master --force
+
+# Then refresh the project
+refresh

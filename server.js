@@ -6,7 +6,8 @@
 
 var express = require('express');
 var app = express();
-const cmd = require("node-cmd");
+var execSh = require('exec-sh');
+
  
 app.get('/', function (req, res) {
   	res.send('Hello World')
@@ -15,12 +16,7 @@ app.get('/', function (req, res) {
 app.post('/git', (req, res) => {
 	// If event is "push"
 	if (req.headers['x-github-event'] == "push") { 
-		cmd.run('chmod 777 git.sh'); /* :/ Fix no perms after updating */
-		cmd.get('./git.sh', (err, data) => {  // Run our script
-		  if (data) console.log(data);
-		  if (err) console.log(err);
-		});
-		cmd.run('refresh');  // Refresh project
+		execSh('./git.sh');
 		console.log("> [GIT] Updated with origin/master");
 	}
   
