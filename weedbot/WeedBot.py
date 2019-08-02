@@ -15,7 +15,7 @@ TOKEN = os.getenv("DISCORD")
 
 # Now it's time to import discord and do the weed stuff
 import discord
-#print(discord.__version__) # should print out (0.16.12)
+print(discord.__version__) # should print out (0.16.12)
 import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
