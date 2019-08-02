@@ -1,5 +1,7 @@
 #/bin/sh
 
+chmod 777 ./git.sh
+
 # Fetch the newest code
 git fetch origin master
 
