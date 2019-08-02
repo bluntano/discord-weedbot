@@ -7,6 +7,7 @@
 var express = require('express');
 var app = express();
 var execSh = require('exec-sh');
+var cmd = require('node-cmd');
 
  
 app.get('/', function (req, res) {
@@ -16,8 +17,8 @@ app.get('/', function (req, res) {
 app.post('/git', (req, res) => {
 	// If event is "push"
 	if (req.headers['x-github-event'] == "push") {
-		execSh('chmod 777 ./git.sh');
-		execSh('./git.sh');
+		cmd.run('chmod 777 ./git.sh');
+		cmd.run('sh ./git.sh');
 		console.log("> [GIT] Updated with origin/master");
 	}
   
