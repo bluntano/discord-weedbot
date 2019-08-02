@@ -25,6 +25,7 @@ speed=0.1 # how fast will it edit the message
 # when its ready
 @client.event
 async def on_ready():
+    await client.change_status(game="with sum weeeed!")
     print("Weed is ready to serve!")
 
 # Error handling
