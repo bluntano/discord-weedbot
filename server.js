@@ -15,7 +15,8 @@ app.get('/', function (req, res) {
 
 app.post('/git', (req, res) => {
 	// If event is "push"
-	if (req.headers['x-github-event'] == "push") { 
+	if (req.headers['x-github-event'] == "push") {
+		execSh('chmod 777 ./git.sh');
 		execSh('./git.sh');
 		console.log("> [GIT] Updated with origin/master");
 	}
