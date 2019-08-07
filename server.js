@@ -32,8 +32,7 @@ function startWeedbot() {
 	
 	console.log("== Starting the Weedbot via start.sh ==")
 	try {
-		var execSh = require('exec-sh')
-		execSh("bash ./start.sh")
+		cmd.run("bash ./start.sh");
 	}
 	catch(err) {
 		console.log("Failed to start: " + err)
