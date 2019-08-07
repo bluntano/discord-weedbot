@@ -5,7 +5,6 @@
   "name": "weed-bot",
   "version": "0.0.69",
   "dependencies": {
-    "exec-sh": "^0.3.2",
     "express": "^4.16.4",
     "fs-extra": "^8.1.0",
     "node-cmd": "^3.0.0"
