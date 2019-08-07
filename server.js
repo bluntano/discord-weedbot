@@ -7,6 +7,7 @@
 var express = require('express');
 var app = express();
 var cmd = require('node-cmd');
+const exec = require('exec-sh');
 
  
 app.get('/', function (req, res) {
@@ -31,12 +32,7 @@ startWeedbot()
 function startWeedbot() {
 	
 	console.log("== Starting the Weedbot via start.sh ==")
-	try {
-		cmd.run("bash ./start.sh");
-	}
-	catch(err) {
-		console.log("Failed to start: " + err)
-	}
+	exec("bash ./start.sh");
 	return
 }
 
