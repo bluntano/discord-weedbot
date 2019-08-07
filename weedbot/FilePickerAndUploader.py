@@ -106,10 +106,9 @@ class Tools:
         # before uploading it to Dropbox.
         if extension is mp4 or mov:
 
-            # Linux (portable, LD_LIBRARY_PATH set in start.sh)
-            #media_info = MediaInfo.parse(upload_path, library_file='./mediainfo/libmediainfo.so.0')
-
-            # Windows (high chance Windows has MediaInfo library installed)
+            # MediaInfo library
+            # On Linux host, LD_LIBRARY_PATH on start.sh file has defined the location
+            # of the library files
             media_info = MediaInfo.parse(upload_path)
 
             t = media_info.tracks[0]
