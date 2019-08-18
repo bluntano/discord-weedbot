@@ -20,7 +20,7 @@ import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
 client = Bot(command_prefix = ["w", "W"])
-speed=0.1 # how fast will it edit the message
+speed=0.25 # how fast will it edit the message
 
 # when its ready
 @client.event
@@ -78,7 +78,7 @@ async def on_message(message):
                         await client.edit_message(msg_status, "❌ Unknown / Unsupported file extension!")
                         break
                     elif status == "FileTooBig":
-                        await client.edit_message(msg_status, "❌ Failed to upload: Video file size is bigger than 3.3 MB!")
+                        await client.edit_message(msg_status, "❌ Failed to upload: Video file size is bigger than 2.5 MB!")
                         break
                     elif status == "DimensionsTooSmall":
                         await client.edit_message(msg_status, "❌ Failed to upload: Video dimensions are too small!")
