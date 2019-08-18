@@ -88,7 +88,6 @@ class Tools:
 
         # Make a folder called 'upload-pictures' if it doesn't already exist
         while not os.path.exists('./upload-pictures/'):
-            print("===========================================")
             print("Making directory for new received pictures")
             os.mkdir('./upload-pictures/')
 
@@ -101,37 +100,33 @@ class Tools:
             for chunk in r.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
-    
-        # For checking if the file uploaded to the server is mp4 and
-        # before uploading it to Dropbox.
-        if extension is mp4 or mov:
 
-            # MediaInfo library
-            # On Linux host, LD_LIBRARY_PATH on start.sh file has defined the location
-            # of the library files
-            media_info = MediaInfo.parse(upload_path)
-
-            t = media_info.tracks[0]
-            filesize = t.to_data()["file_size"]
-            if filesize > 3300000:
-                Tools.upload_picture_to_dropbox.is_uploaded = "FileTooBig"
-                os.remove(upload_path)
-                return
-            else:
-                for track in media_info.tracks:
-                    if track.track_type == 'Video':
-                        width = track.width
-                        height = track.height
-                        print("Video resolution: {}x{}".format(track.width, track.height))
-                        if width < 100 or height < 75:
-                            Tools.upload_picture_to_dropbox.is_uploaded = "DimensionsTooSmall"
-                            os.remove(upload_path)
-                            return
+        # MediaInfo library
+        # Checks file size of submitted picture or video, also checks video dimensions
+        # On Linux host, LD_LIBRARY_PATH on start.sh file has defined the location
+        # of the library files
+        media_info = MediaInfo.parse(upload_path)
+        t = media_info.tracks[0]
+        filesize = t.to_data()["file_size"]
+        if filesize > 2500000:
+            Tools.upload_picture_to_dropbox.is_uploaded = "FileTooBig"
+            os.remove(upload_path)
+            return
+        else:
+            for track in media_info.tracks:
+                if track.track_type == 'Video':
+                    width = track.width
+                    height = track.height
+                    print("Video resolution: {}x{}".format(track.width, track.height))
+                    if width < 100 or height < 75:
+                        Tools.upload_picture_to_dropbox.is_uploaded = "DimensionsTooSmall"
+                        os.remove(upload_path)
+                        return
 
         # Read the just downloaded picture and upload it to Dropbox
         with open(upload_path, 'rb') as f:
-            print("===========================================")
             print("Uploading picture to Dropbox:", url)
+            print("===========================================")
             try:
                 dbx.files_upload(f.read(), WeedPictures + str(x) + extension, mute=True)
                 Tools.upload_picture_to_dropbox.is_uploaded = True
