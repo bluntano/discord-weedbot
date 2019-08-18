@@ -78,7 +78,7 @@ async def on_message(message):
                         await client.edit_message(msg_status, "❌ Unknown / Unsupported file extension!")
                         break
                     elif status == "FileTooBig":
-                        await client.edit_message(msg_status, "❌ Failed to upload: Video file size is bigger than 2.5 MB!")
+                        await client.edit_message(msg_status, "❌ Failed to upload: Picture or video file size is bigger than 2.5 MB!")
                         break
                     elif status == "DimensionsTooSmall":
                         await client.edit_message(msg_status, "❌ Failed to upload: Video dimensions are too small!")
