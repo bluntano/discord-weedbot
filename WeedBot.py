@@ -131,9 +131,15 @@ async def eed(ctx): # lol eed
         file_to_send = discord.File(fp=file, filename=f"smok_weed_evryday.{file.rsplit('.', 1)[1]}", spoiler=True)
         await ctx.send(file=file_to_send, content=f"<@{usertag}> {msgcontent.format(x)}")
 
-def run():
-    client.run(DISCORD_TOKEN)  # Where 'TOKEN' is your bot token
+async def run():
+    await client.start(DISCORD_TOKEN)  # Where 'TOKEN' is your bot token
+
+def run_it_forever(loop):
+    loop.run_forever()
 
 def bot_alive():
-    t = Thread(target=run)
+    loop = asyncio.get_event_loop()
+    loop.create_task(run())
+
+    t = Thread(target=run_it_forever, args=(loop,))
     t.start()
