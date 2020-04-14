@@ -41,7 +41,7 @@ class PickerAndUploader:
 
     def __init__(self):
         '''Picker and uploader (from and to dropbox respectively)'''
-        self.supported_types = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'mov']
+        self.supported_types = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'mov', 'webm']
         self.upload_media = './upload-media/'
         self.filesize_limit = 7200000
         self.dropbox_path = '/weedbot-media/' # I set my Dropbox token to access one particular folder only
