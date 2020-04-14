@@ -1,1 +1,3 @@
-weedbot/.env
+.env
+upload-media
+__pycache__
