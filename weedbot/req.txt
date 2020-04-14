@@ -1,4 +1,0 @@
-discord.py[voice]==0.16.12
-dropbox
-pymediainfo
-python-dotenv
