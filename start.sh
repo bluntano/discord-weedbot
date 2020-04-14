@@ -1,30 +1,24 @@
 #!/bin/bash
 
-# This script is executed by server.js: it basically powers up the weed smoker bot.
-# It also has a pip command that is required to execute before launching the bot.
-# Otherwise the bot won't start up.
+# Exit early on errors
+set -eu
+
+# Python buffers stdout. Without this, you won't see what you "print" in the Activity Logs
+export PYTHONUNBUFFERED=true
 
 # portable MediaInfo library for Linux (otherwise is taken from the system library folder instead)
-export LD_LIBRARY_PATH=~/weedbot/mediainfo/
+export LD_LIBRARY_PATH=~/mediainfo/
 
-# Make sure you have Python 3.5 installed (e.g. 3.5.2)
-pythonversion=$(python3 --version)
-echo $pythonversion
+# Install Python 3 virtual env
+VIRTUALENV=.data/venv
 
-if [[ $pythonversion =~ "3.5.2" ]];
-then
-  # Display Python code logs (Errors, printings, etc.)
-  export PYTHONUNBUFFERED=true
-  
-	python3 -m pip install --upgrade pip --user
-
-	# Install the requirements
-	# Uncomment the command below to install from the requirements file
-	cd weedbot
-	pip3 install -r req.txt --user
-
-	# Finally, start the bot
-	python3 WeedBot.py
-else
-	echo "Failed to run :( Either, Python is not installed or, it is incorrect version."
+if ! command -v virtualenv; then
+  pip3 install virtualenv
 fi
+
+if [ ! -d $VIRTUALENV ]; then
+  virtualenv -p /usr/bin/python3 $VIRTUALENV
+fi
+
+$VIRTUALENV/bin/pip3 install -r requirements.txt
+$VIRTUALENV/bin/python3 WeedBot.py
