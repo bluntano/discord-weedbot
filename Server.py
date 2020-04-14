@@ -11,9 +11,10 @@ def index():
 def bot_invite():
     return redirect(f"https://discordapp.com/api/oauth2/authorize?client_id={WeedBot.bot_id()}&permissions=2064&scope=bot")
 
-@app.route('/git' methods=['POST'])
+@app.route('/git', methods=['POST'])
 def git_update():
-    subprocess.call(['./git.sh'])
+    proc = 'chmod 0777 git.sh && ./git.sh'
+    subprocess.call(proc.split())
     return "git"
 
 if __name__ == "__main__":
