@@ -129,7 +129,7 @@ async def eed(ctx): # lol eed
         elif x <= 75: msgcontent = choice(seventyfive_set)
         elif x <= 100: msgcontent = choice(onehundred_set)
         file_to_send = discord.File(fp=file, filename=f"smok_weed_evryday.{file.rsplit('.', 1)[1]}", spoiler=True)
-        await ctx.send(file=file_to_send, content=f"<@{usertag}> {msgcontent.format(x)}", delete_after=10)
+        await ctx.send(file=file_to_send, content=f"<@{usertag}> {msgcontent.format(x)}")
 
 async def run():
     await client.start(DISCORD_TOKEN)  # Where 'TOKEN' is your bot token
