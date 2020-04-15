@@ -9,7 +9,7 @@ def index():
 
 @app.route('/bot')
 def bot_invite():
-    return redirect(f"https://discordapp.com/api/oauth2/authorize?client_id={WeedBot.bot_id()}&permissions=2064&scope=bot")
+    return redirect(f"https://discordapp.com/api/oauth2/authorize?client_id={WeedBot.bot_id()}&permissions=43024&scope=bot")
 
 @app.route('/git', methods=['POST'])
 def git_update():
