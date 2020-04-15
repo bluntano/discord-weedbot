@@ -17,7 +17,7 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 pau = PickerAndUploader()
 client = Bot(command_prefix = ["w", "W"])
-speed = 0.25 # how fast will it edit the message
+speed = 0.10 # how fast will it edit the message
 
 def bot_id():
     return client.user.id
@@ -54,17 +54,17 @@ async def on_message(message):
     # Allow 'weed'/'Weed' or other commands in general to work
     await client.process_commands(message)
 
-    # Look for channel by name '#weedpic-requests'
-    channel = discord.utils.get(message.guild.channels, name='weedpics')
-
-    # If it's not the weedpic-requests channel
-    if message.channel != channel: return
-
     # If message author is bot or the bot itselt, ignore.
     if message.author.bot or message.author.id == client.user.id: return
 
     # If the message doesn't have attachments
     if message.attachments == []: return
+
+    # Look for channel by name '#weedpic-requests'
+    channel = discord.utils.get(message.guild.channels, name='weedpics')
+
+    # If it's not the weedpic-requests channel
+    if message.channel != channel: return
 
     # Take the link, and start the upload process
     link = message.attachments[0].url
@@ -78,7 +78,7 @@ async def on_message(message):
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)
-@commands.cooldown(1, 12, commands.BucketType.guild) # on this, weed command cooldown has set to 18 seconds
+@commands.cooldown(1, 10, commands.BucketType.guild)
 async def eed(ctx): # lol eed
 
     # Starting to smoke!!!! 420 blaze it!!! (Edits one message 9 times)
