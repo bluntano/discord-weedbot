@@ -3,6 +3,9 @@
 # Exit early on errors
 set -eu
 
+# Delete pictures from previous session
+rm -rf upload-media/
+
 # Python buffers stdout. Without this, you won't see what you "print" in the Activity Logs
 export PYTHONUNBUFFERED=true
 
