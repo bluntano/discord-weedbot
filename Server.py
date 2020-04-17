@@ -3,7 +3,7 @@ import subprocess
 import WeedBot
 import json
 
-server_debug = True
+server_debug = False # This only activates Flask web server
 
 def page_handler(input: str):
     return render_template('header.html') + render_template(input) + render_template('footer.html')
