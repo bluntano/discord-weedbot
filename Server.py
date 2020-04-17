@@ -47,7 +47,7 @@ def handle_data():
     chosen_set = request.form['sets']
     if not textline or not chosen_set:
         return status_handler("Why are we still here to suffer?")
-    if len(textline) > 32:
+    if len(textline) > 56:
         return status_handler("Yooo brooo, chill!")
     with open('sentences.json', 'r') as infile:
         data = json.load(infile)
