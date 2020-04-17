@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row justify-content-center animated bounceInLeft">
+        <h1>Submit page!</h1>
+    </div>
+    <div class="row justify-content-center animated bounceInRight delayed-1s">
+        <form action="{{ url_for('handle_data') }}" method="POST">
+            <div class="col-md-3">
+                <label for="textline">Submit your textline here:</label>
+            </div>
+            <div class="col-md-6">
+                <input oninput="checkSubmit()" type="text" id="textline" name="textline">
+            </div>
+            <div class="col-md-3">
+                <select id="sets" onchange="checkSubmit()" name="sets">
+                    <option value="">Choose one!</option>
+                    <option value="twentyfive_set">less than 25%</option>
+                    <option value="fifty_set">less than 50%</option>
+                    <option value="seventyfive_set">less than 75%</option>
+                    <option value="onehundred_set">less than 100%</option>
+                </select>
+            </div>
+            <div class="row submitSection justify-content-center">
+                <div class="col-md-12 submitStatus">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
