@@ -135,7 +135,7 @@ async def eed(ctx): # lol eed
         onehundred_set = data['onehundred_set']
     
     try:
-        picture = pau.pick_random_picture()
+        picture = PickerAndUploader().pick_random_picture()
     except NoFilesInDropboxError:
         pass
 
