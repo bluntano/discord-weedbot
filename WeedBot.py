@@ -2,6 +2,7 @@
 # Licensed under MIT license
 # Copyright (c) 2019 Bluntano
 import os
+import shutil
 import glob
 import json
 from random import *
@@ -15,20 +16,33 @@ import discord
 import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
-pau = PickerAndUploader()
 client = Bot(command_prefix = ["w", "W"])
 speed = 0.10 # how fast will it edit the message
 
+# for web server (route /bot or /invite)
 def bot_id():
     return client.user.id
+
+# delete pictures every {} minutes
+async def delete_media():
+    time_in_min = 60 * 5
+    while True:
+        try:
+            print("== Removing upload-media (looping task) ==")
+            shutil.rmtree('upload-media/')
+            await asyncio.sleep(time_in_min)
+        except:
+            await asyncio.sleep(time_in_min)
+            pass
 
 # when its ready
 @client.event
 async def on_ready():
-    pau.create_folder()
+    PickerAndUploader().create_folder()
     game = discord.Game("Weed time!")
     await client.change_presence(activity=game)
-    print("Weed is ready to serve!")
+    client.loop.create_task(delete_media())
+    print(f"== {client.user.name} is ready to serve weed! ==")
 
 # when joined new server
 @client.event
@@ -65,17 +79,19 @@ async def on_message(message):
 
     # If it's not the weedpic-requests channel
     if message.channel != channel: return
+    pau = PickerAndUploader()
 
     # Take the link, and start the upload process
-    link = message.attachments[0].url
-    await message.delete()
     msg = await message.channel.send("⏳ Uploading")
     try:
-        pau.upload_picture_to_dropbox(url=link)
+        link = message.attachments[0].url
+        pau.download_from_discord(link)
+        await message.delete()
+        pau.upload_to_dropbox()
         await msg.edit(content="✅ Uploaded!", delete_after=5)
     except Exception as err:
         await msg.edit(content=f"❌ Failed to upload:\n||`{str(err)}`||", delete_after=5)
-        raise commands.CommandError(f"Failed to upload: {str(err)}")
+        raise commands.CommandError(f"== Failed to upload: {str(err)} ==")
 
 # The juicy stuff here (command event)
 @client.command(pass_context=True)

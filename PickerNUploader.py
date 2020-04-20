@@ -45,24 +45,16 @@ class PickerAndUploader:
         self.upload_media = './upload-media/'
         self.filesize_limit = 7200000
         self.dropbox_path = '/weedbot-media/' # I set my Dropbox token to access one particular folder only
-
-    def create_folder(self):
-        '''Creates folder neccessary for storing media files'''
-        try:
-            dbx.files_create_folder(f'{self.dropbox_path[:-1]}')
-        except ApiError:
-            print(f"Folder {self.dropbox_path} already exists.")
-            pass
-
-    def upload_picture_to_dropbox(self, url: str):
-        '''Downloads picture from given URL and stores it onto the server.
+    
+    def download_from_discord(self, url: str):
+        '''Downloads picture before it deletes from Discord
         Parameters
         ----------
-        url : str
-            URL to download onto server and upload to Dropboxs.
+        url: str
+            URL to download onto the server.
         '''
-
-        url_lowered = url.lower()
+        self.url = url
+        url_lowered = self.url.lower()
         url_ext = url_lowered.rsplit('.', 1)[1]
 
         # Supported extensions
@@ -80,11 +72,12 @@ class PickerAndUploader:
         new_file = FileCount + 1
 	
 	    # The upload path variable for better... code, idk
-        upload_path = f'{self.upload_media}{str(new_file)}.{url_ext}'
+        self.new_file_path = f'{str(new_file)}.{url_ext}'
+        self.upload_path = f'{self.upload_media}{self.new_file_path}'
 
-        # Make a folder called 'upload-pictures' if it doesn't already exist
+        # Make a folder called 'upload-media' if it doesn't already exist
         while not os.path.exists(self.upload_media):
-            print("Making directory for new received pictures")
+            print("== Making directory for new received pictures ==")
             os.mkdir(self.upload_media)
 
         # Download picture from Discord attachments server
@@ -92,20 +85,20 @@ class PickerAndUploader:
         'User-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'
         }
         r = requests.get(url=url, headers=headers, stream=True)
-        with open(upload_path, 'wb') as f:
+        with open(self.upload_path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
-
+        
         # MediaInfo library
         # Checks file size of submitted picture or video, also checks video dimensions
         # On Linux host, LD_LIBRARY_PATH on start.sh file has defined the location
         # of the library files
-        media_info = MediaInfo.parse(upload_path)
+        media_info = MediaInfo.parse(self.upload_path)
         t = media_info.tracks[0]
         filesize = t.to_data()["file_size"]
         if filesize > self.filesize_limit:
-            os.remove(upload_path)
+            os.remove(self.upload_path)
             raise FileTooBigError(f"File is bigger than {filesize / 1000000} MB.")
 
         for track in media_info.tracks:
@@ -113,24 +106,32 @@ class PickerAndUploader:
                 width = track.width
                 height = track.height
                 if width < 100 or height < 75:
-                    os.remove(upload_path)
+                    os.remove(self.upload_path)
                     raise VideoDimensionsError("Video dimensions are too small.")
 
+    def create_folder(self):
+        '''Creates folder neccessary for storing media files'''
+        try:
+            dbx.files_create_folder(f'{self.dropbox_path[:-1]}')
+        except ApiError:
+            print(f"== Folder {self.dropbox_path} already exists. ==")
+            pass
+
+    def upload_to_dropbox(self):
+        '''Uploads new downloaded file to Dropbox storage'''
+
         # Read the just downloaded picture and upload it to Dropbox
-        with open(upload_path, 'rb') as f:
-            print("Uploading picture to Dropbox:", url)
-            print("===========================================")
+        with open(self.upload_path, 'rb') as f:
+            print(f"== Uploading to Dropbox: {self.upload_path} ==")
             try:
-                dbx.files_upload(f.read(), f'{self.dropbox_path}{new_file}.{url_ext}', mute=True)
-                return print("Done!")
+                return dbx.files_upload(f.read(), f'{self.dropbox_path}{self.new_file_path}', mute=True)
             except Exception as e:
                 raise UploadingError(e)
 
     def pick_random_picture(self):
         '''Picks a completely random picture or video from Dropbox storage'''
 
-        print("Picker initiated! Please wait...")
-        print("===========================================")
+        print("== Picker initiated! Please wait... ==")
 
         # Counts up files in a folder (IMPORTANT!!!)
         meta_stuff = dbx.files_list_folder(self.dropbox_path).entries
@@ -142,15 +143,14 @@ class PickerAndUploader:
             # A random digit between 1 and number of files in total
             file_count = len(entries)
             x = randint(1, file_count)
-            print("Media files in total:", file_count)
+            print(f"== Media files in total: {file_count} ==")
             searchpicture = dbx.files_search(self.dropbox_path[:-1], f'{x}').matches[0].metadata.name
         except Exception as err:
             print("Fuck!", err)
             raise NoFilesInDropboxError
 
         file_result = str(searchpicture)
-        print("Randomly picked file:", file_result)
-        print("===========================================")
+        print(f"Randomly picked file: {file_result}")
 
         # Takes file extension from the picked picture
         file_ext = file_result.split('.')[1]
@@ -166,7 +166,7 @@ class PickerAndUploader:
         for pic_file in glob.glob('picture.*'):
             if os.path.exists(pic_file): os.remove(pic_file)
             elif os.path.exist(picture_with_ext): os.remove(picture_with_ext)
-            else: print("Picture does not exist! Downloading one...")
+            else: print("== Picture does not exist! Downloading one... ==")
 
         download_picture = urllib.request.urlretrieve(url=file_url, filename=f'./{picture_with_ext}')
         return True
