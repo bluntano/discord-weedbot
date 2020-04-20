@@ -68,12 +68,13 @@ async def on_message(message):
 
     # Take the link, and start the upload process
     link = message.attachments[0].url
+    await message.delete()
     msg = await message.channel.send("⏳ Uploading")
     try:
         pau.upload_picture_to_dropbox(url=link)
-        await msg.edit(content="✅ Uploaded!")
+        await msg.edit(content="✅ Uploaded!", delete_after=5)
     except Exception as err:
-        await msg.edit(content=f"❌ Failed to upload:\n||`{str(err)}`||")
+        await msg.edit(content=f"❌ Failed to upload:\n||`{str(err)}`||", delete_after=5)
         raise commands.CommandError(f"Failed to upload: {str(err)}")
 
 # The juicy stuff here (command event)
